@@ -1,0 +1,86 @@
+{
+    "author": "Axel Kark",
+    "dependencies": {
+        "@rebble/clay": "1.0.8"
+    },
+    "keywords": [],
+    "name": "ha-trigger",
+    "pebble": {
+        "capabilities": [
+            "configurable"
+        ],
+        "displayName": "HA Trigger",
+        "enableMultiJS": true,
+        "messageKeys": [
+            "HA_URL",
+            "HA_TOKEN",
+            "STATUS_ENTITY",
+            "LABEL_TOP",
+            "SERVICE_TOP",
+            "ENTITY_TOP",
+            "CONFIRM_TOP",
+            "LABEL_BOTTOM",
+            "SERVICE_BOTTOM",
+            "ENTITY_BOTTOM",
+            "CONFIRM_BOTTOM",
+            "THEME",
+            "STATUS_TEXT",
+            "ACTION_TRIGGER",
+            "REQUEST_UPDATE",
+            "REQUEST_CONFIG",
+            "CONFIG_PUSH",
+            "STATUS_KIND",
+            "SCREEN",
+            "STATUS_ENTITY_2",
+            "LABEL_TOP_2",
+            "SERVICE_TOP_2",
+            "ENTITY_TOP_2",
+            "CONFIRM_TOP_2",
+            "LABEL_BOTTOM_2",
+            "SERVICE_BOTTOM_2",
+            "ENTITY_BOTTOM_2",
+            "CONFIRM_BOTTOM_2",
+            "STATUS_ENTITY_3",
+            "LABEL_TOP_3",
+            "SERVICE_TOP_3",
+            "ENTITY_TOP_3",
+            "CONFIRM_TOP_3",
+            "LABEL_BOTTOM_3",
+            "SERVICE_BOTTOM_3",
+            "ENTITY_BOTTOM_3",
+            "CONFIRM_BOTTOM_3",
+            "STATUS_ENTITY_4",
+            "LABEL_TOP_4",
+            "SERVICE_TOP_4",
+            "ENTITY_TOP_4",
+            "CONFIRM_TOP_4",
+            "LABEL_BOTTOM_4",
+            "SERVICE_BOTTOM_4",
+            "ENTITY_BOTTOM_4",
+            "CONFIRM_BOTTOM_4",
+            "STATUS_ENTITY_5",
+            "LABEL_TOP_5",
+            "SERVICE_TOP_5",
+            "ENTITY_TOP_5",
+            "CONFIRM_TOP_5",
+            "LABEL_BOTTOM_5",
+            "SERVICE_BOTTOM_5",
+            "ENTITY_BOTTOM_5",
+            "CONFIRM_BOTTOM_5"
+        ],
+        "projectType": "native",
+        "resources": {
+            "media": []
+        },
+        "sdkVersion": "3",
+        "targetPlatforms": [
+            "emery",
+            "gabbro"
+        ],
+        "uuid": "6f4bbfbd-c1e8-468c-b0af-92cfa2461df5",
+        "watchapp": {
+            "watchface": false
+        }
+    },
+    "version": "1.2.0"
+}

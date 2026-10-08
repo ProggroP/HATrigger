@@ -1,0 +1,532 @@
+[
+  {
+    "type": "heading",
+    "defaultValue": "HA Trigger"
+  },
+  {
+    "type": "text",
+    "defaultValue": "Up to five screens, each with two Home Assistant actions on the top and bottom buttons and its own status line. The middle button flips to the next screen; only screens with at least one action are shown. The status refreshes by itself every 15 seconds while the app is open. Fill in your own URL, token and entities below."
+  },
+  {
+    "type": "section",
+    "items": [
+      {
+        "type": "heading",
+        "defaultValue": "Home Assistant"
+      },
+      {
+        "type": "input",
+        "messageKey": "HA_URL",
+        "label": "HA URL",
+        "defaultValue": "http://homeassistant.local:8123",
+        "description": "Base URL only, no path and no trailing slash. If you leave out http:// or https:// it is assumed to be http://. Maximum 95 characters.",
+        "attributes": {
+          "placeholder": "https://ha.example.org",
+          "maxlength": "95"
+        }
+      },
+      {
+        "type": "input",
+        "messageKey": "HA_TOKEN",
+        "label": "Long-Lived Token",
+        "description": "Profile > Security > Long-lived access tokens. Best used with a dedicated, non-administrative HA user. Paste the token in one piece; line breaks are stripped automatically. Maximum 255 characters.",
+        "attributes": {
+          "placeholder": "eyJhbGciOi...",
+          "type": "password",
+          "maxlength": "255"
+        }
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "items": [
+      {
+        "type": "heading",
+        "defaultValue": "Screen 1"
+      },
+      {
+        "type": "text",
+        "defaultValue": "Screens 2 to 5 below work the same way. Leave both actions of a screen empty to hide it."
+      },
+      {
+        "type": "input",
+        "messageKey": "STATUS_ENTITY",
+        "label": "Status Entity",
+        "description": "Shown as text in the centre of the screen. Leave empty to use the entity of the top action, or of the bottom one if the top is empty. A template sensor works great here.",
+        "attributes": {
+          "placeholder": "sensor.front_door_status",
+          "maxlength": "47"
+        }
+      },
+      {
+        "type": "input",
+        "messageKey": "LABEL_TOP",
+        "label": "Top Label",
+        "description": "Shown on the card. Leave empty to show the entity name instead. Long labels are truncated.",
+        "attributes": {
+          "maxlength": "23"
+        },
+        "defaultValue": "Open"
+      },
+      {
+        "type": "input",
+        "messageKey": "SERVICE_TOP",
+        "label": "Top Action",
+        "description": "Format domain.service, for example lock.open, switch.toggle, cover.open_cover. For a script, scene, automation or button you can leave this empty and name the entity alone.",
+        "attributes": {
+          "placeholder": "lock.open",
+          "maxlength": "31"
+        }
+      },
+      {
+        "type": "input",
+        "messageKey": "ENTITY_TOP",
+        "label": "Top Target Entity",
+        "description": "Leave empty for actions that need no target, such as a script without arguments.",
+        "attributes": {
+          "placeholder": "lock.front_door",
+          "maxlength": "47"
+        }
+      },
+      {
+        "type": "toggle",
+        "messageKey": "CONFIRM_TOP",
+        "label": "Top Confirmation Prompt",
+        "description": "Shows a countdown ring before the action runs. Cards with a prompt are marked with a dot.",
+        "defaultValue": true
+      },
+      {
+        "type": "input",
+        "messageKey": "LABEL_BOTTOM",
+        "label": "Bottom Label",
+        "description": "Shown on the card. Leave empty to show the entity name instead. Long labels are truncated.",
+        "attributes": {
+          "maxlength": "23"
+        },
+        "defaultValue": "Lock"
+      },
+      {
+        "type": "input",
+        "messageKey": "SERVICE_BOTTOM",
+        "label": "Bottom Action",
+        "description": "Format domain.service, for example lock.open, switch.toggle, cover.open_cover. For a script, scene, automation or button you can leave this empty and name the entity alone.",
+        "attributes": {
+          "placeholder": "lock.lock",
+          "maxlength": "31"
+        }
+      },
+      {
+        "type": "input",
+        "messageKey": "ENTITY_BOTTOM",
+        "label": "Bottom Target Entity",
+        "description": "Leave empty for actions that need no target, such as a script without arguments.",
+        "attributes": {
+          "placeholder": "lock.front_door",
+          "maxlength": "47"
+        }
+      },
+      {
+        "type": "toggle",
+        "messageKey": "CONFIRM_BOTTOM",
+        "label": "Bottom Confirmation Prompt",
+        "description": "Shows a countdown ring before the action runs. Cards with a prompt are marked with a dot.",
+        "defaultValue": false
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "items": [
+      {
+        "type": "heading",
+        "defaultValue": "Screen 2"
+      },
+      {
+        "type": "input",
+        "messageKey": "STATUS_ENTITY_2",
+        "label": "Status Entity",
+        "description": "Shown as text in the centre of the screen. Leave empty to use the entity of the top action, or of the bottom one if the top is empty. A template sensor works great here.",
+        "attributes": {
+          "placeholder": "sensor.front_door_status",
+          "maxlength": "47"
+        }
+      },
+      {
+        "type": "input",
+        "messageKey": "LABEL_TOP_2",
+        "label": "Top Label",
+        "description": "Shown on the card. Leave empty to show the entity name instead. Long labels are truncated.",
+        "attributes": {
+          "maxlength": "23"
+        }
+      },
+      {
+        "type": "input",
+        "messageKey": "SERVICE_TOP_2",
+        "label": "Top Action",
+        "description": "Format domain.service, for example lock.open, switch.toggle, cover.open_cover. For a script, scene, automation or button you can leave this empty and name the entity alone.",
+        "attributes": {
+          "placeholder": "lock.open",
+          "maxlength": "31"
+        }
+      },
+      {
+        "type": "input",
+        "messageKey": "ENTITY_TOP_2",
+        "label": "Top Target Entity",
+        "description": "Leave empty for actions that need no target, such as a script without arguments.",
+        "attributes": {
+          "placeholder": "lock.front_door",
+          "maxlength": "47"
+        }
+      },
+      {
+        "type": "toggle",
+        "messageKey": "CONFIRM_TOP_2",
+        "label": "Top Confirmation Prompt",
+        "description": "Shows a countdown ring before the action runs. Cards with a prompt are marked with a dot.",
+        "defaultValue": true
+      },
+      {
+        "type": "input",
+        "messageKey": "LABEL_BOTTOM_2",
+        "label": "Bottom Label",
+        "description": "Shown on the card. Leave empty to show the entity name instead. Long labels are truncated.",
+        "attributes": {
+          "maxlength": "23"
+        }
+      },
+      {
+        "type": "input",
+        "messageKey": "SERVICE_BOTTOM_2",
+        "label": "Bottom Action",
+        "description": "Format domain.service, for example lock.open, switch.toggle, cover.open_cover. For a script, scene, automation or button you can leave this empty and name the entity alone.",
+        "attributes": {
+          "placeholder": "lock.lock",
+          "maxlength": "31"
+        }
+      },
+      {
+        "type": "input",
+        "messageKey": "ENTITY_BOTTOM_2",
+        "label": "Bottom Target Entity",
+        "description": "Leave empty for actions that need no target, such as a script without arguments.",
+        "attributes": {
+          "placeholder": "lock.front_door",
+          "maxlength": "47"
+        }
+      },
+      {
+        "type": "toggle",
+        "messageKey": "CONFIRM_BOTTOM_2",
+        "label": "Bottom Confirmation Prompt",
+        "description": "Shows a countdown ring before the action runs. Cards with a prompt are marked with a dot.",
+        "defaultValue": false
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "items": [
+      {
+        "type": "heading",
+        "defaultValue": "Screen 3"
+      },
+      {
+        "type": "input",
+        "messageKey": "STATUS_ENTITY_3",
+        "label": "Status Entity",
+        "description": "Shown as text in the centre of the screen. Leave empty to use the entity of the top action, or of the bottom one if the top is empty. A template sensor works great here.",
+        "attributes": {
+          "placeholder": "sensor.front_door_status",
+          "maxlength": "47"
+        }
+      },
+      {
+        "type": "input",
+        "messageKey": "LABEL_TOP_3",
+        "label": "Top Label",
+        "description": "Shown on the card. Leave empty to show the entity name instead. Long labels are truncated.",
+        "attributes": {
+          "maxlength": "23"
+        }
+      },
+      {
+        "type": "input",
+        "messageKey": "SERVICE_TOP_3",
+        "label": "Top Action",
+        "description": "Format domain.service, for example lock.open, switch.toggle, cover.open_cover. For a script, scene, automation or button you can leave this empty and name the entity alone.",
+        "attributes": {
+          "placeholder": "lock.open",
+          "maxlength": "31"
+        }
+      },
+      {
+        "type": "input",
+        "messageKey": "ENTITY_TOP_3",
+        "label": "Top Target Entity",
+        "description": "Leave empty for actions that need no target, such as a script without arguments.",
+        "attributes": {
+          "placeholder": "lock.front_door",
+          "maxlength": "47"
+        }
+      },
+      {
+        "type": "toggle",
+        "messageKey": "CONFIRM_TOP_3",
+        "label": "Top Confirmation Prompt",
+        "description": "Shows a countdown ring before the action runs. Cards with a prompt are marked with a dot.",
+        "defaultValue": true
+      },
+      {
+        "type": "input",
+        "messageKey": "LABEL_BOTTOM_3",
+        "label": "Bottom Label",
+        "description": "Shown on the card. Leave empty to show the entity name instead. Long labels are truncated.",
+        "attributes": {
+          "maxlength": "23"
+        }
+      },
+      {
+        "type": "input",
+        "messageKey": "SERVICE_BOTTOM_3",
+        "label": "Bottom Action",
+        "description": "Format domain.service, for example lock.open, switch.toggle, cover.open_cover. For a script, scene, automation or button you can leave this empty and name the entity alone.",
+        "attributes": {
+          "placeholder": "lock.lock",
+          "maxlength": "31"
+        }
+      },
+      {
+        "type": "input",
+        "messageKey": "ENTITY_BOTTOM_3",
+        "label": "Bottom Target Entity",
+        "description": "Leave empty for actions that need no target, such as a script without arguments.",
+        "attributes": {
+          "placeholder": "lock.front_door",
+          "maxlength": "47"
+        }
+      },
+      {
+        "type": "toggle",
+        "messageKey": "CONFIRM_BOTTOM_3",
+        "label": "Bottom Confirmation Prompt",
+        "description": "Shows a countdown ring before the action runs. Cards with a prompt are marked with a dot.",
+        "defaultValue": false
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "items": [
+      {
+        "type": "heading",
+        "defaultValue": "Screen 4"
+      },
+      {
+        "type": "input",
+        "messageKey": "STATUS_ENTITY_4",
+        "label": "Status Entity",
+        "description": "Shown as text in the centre of the screen. Leave empty to use the entity of the top action, or of the bottom one if the top is empty. A template sensor works great here.",
+        "attributes": {
+          "placeholder": "sensor.front_door_status",
+          "maxlength": "47"
+        }
+      },
+      {
+        "type": "input",
+        "messageKey": "LABEL_TOP_4",
+        "label": "Top Label",
+        "description": "Shown on the card. Leave empty to show the entity name instead. Long labels are truncated.",
+        "attributes": {
+          "maxlength": "23"
+        }
+      },
+      {
+        "type": "input",
+        "messageKey": "SERVICE_TOP_4",
+        "label": "Top Action",
+        "description": "Format domain.service, for example lock.open, switch.toggle, cover.open_cover. For a script, scene, automation or button you can leave this empty and name the entity alone.",
+        "attributes": {
+          "placeholder": "lock.open",
+          "maxlength": "31"
+        }
+      },
+      {
+        "type": "input",
+        "messageKey": "ENTITY_TOP_4",
+        "label": "Top Target Entity",
+        "description": "Leave empty for actions that need no target, such as a script without arguments.",
+        "attributes": {
+          "placeholder": "lock.front_door",
+          "maxlength": "47"
+        }
+      },
+      {
+        "type": "toggle",
+        "messageKey": "CONFIRM_TOP_4",
+        "label": "Top Confirmation Prompt",
+        "description": "Shows a countdown ring before the action runs. Cards with a prompt are marked with a dot.",
+        "defaultValue": true
+      },
+      {
+        "type": "input",
+        "messageKey": "LABEL_BOTTOM_4",
+        "label": "Bottom Label",
+        "description": "Shown on the card. Leave empty to show the entity name instead. Long labels are truncated.",
+        "attributes": {
+          "maxlength": "23"
+        }
+      },
+      {
+        "type": "input",
+        "messageKey": "SERVICE_BOTTOM_4",
+        "label": "Bottom Action",
+        "description": "Format domain.service, for example lock.open, switch.toggle, cover.open_cover. For a script, scene, automation or button you can leave this empty and name the entity alone.",
+        "attributes": {
+          "placeholder": "lock.lock",
+          "maxlength": "31"
+        }
+      },
+      {
+        "type": "input",
+        "messageKey": "ENTITY_BOTTOM_4",
+        "label": "Bottom Target Entity",
+        "description": "Leave empty for actions that need no target, such as a script without arguments.",
+        "attributes": {
+          "placeholder": "lock.front_door",
+          "maxlength": "47"
+        }
+      },
+      {
+        "type": "toggle",
+        "messageKey": "CONFIRM_BOTTOM_4",
+        "label": "Bottom Confirmation Prompt",
+        "description": "Shows a countdown ring before the action runs. Cards with a prompt are marked with a dot.",
+        "defaultValue": false
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "items": [
+      {
+        "type": "heading",
+        "defaultValue": "Screen 5"
+      },
+      {
+        "type": "input",
+        "messageKey": "STATUS_ENTITY_5",
+        "label": "Status Entity",
+        "description": "Shown as text in the centre of the screen. Leave empty to use the entity of the top action, or of the bottom one if the top is empty. A template sensor works great here.",
+        "attributes": {
+          "placeholder": "sensor.front_door_status",
+          "maxlength": "47"
+        }
+      },
+      {
+        "type": "input",
+        "messageKey": "LABEL_TOP_5",
+        "label": "Top Label",
+        "description": "Shown on the card. Leave empty to show the entity name instead. Long labels are truncated.",
+        "attributes": {
+          "maxlength": "23"
+        }
+      },
+      {
+        "type": "input",
+        "messageKey": "SERVICE_TOP_5",
+        "label": "Top Action",
+        "description": "Format domain.service, for example lock.open, switch.toggle, cover.open_cover. For a script, scene, automation or button you can leave this empty and name the entity alone.",
+        "attributes": {
+          "placeholder": "lock.open",
+          "maxlength": "31"
+        }
+      },
+      {
+        "type": "input",
+        "messageKey": "ENTITY_TOP_5",
+        "label": "Top Target Entity",
+        "description": "Leave empty for actions that need no target, such as a script without arguments.",
+        "attributes": {
+          "placeholder": "lock.front_door",
+          "maxlength": "47"
+        }
+      },
+      {
+        "type": "toggle",
+        "messageKey": "CONFIRM_TOP_5",
+        "label": "Top Confirmation Prompt",
+        "description": "Shows a countdown ring before the action runs. Cards with a prompt are marked with a dot.",
+        "defaultValue": true
+      },
+      {
+        "type": "input",
+        "messageKey": "LABEL_BOTTOM_5",
+        "label": "Bottom Label",
+        "description": "Shown on the card. Leave empty to show the entity name instead. Long labels are truncated.",
+        "attributes": {
+          "maxlength": "23"
+        }
+      },
+      {
+        "type": "input",
+        "messageKey": "SERVICE_BOTTOM_5",
+        "label": "Bottom Action",
+        "description": "Format domain.service, for example lock.open, switch.toggle, cover.open_cover. For a script, scene, automation or button you can leave this empty and name the entity alone.",
+        "attributes": {
+          "placeholder": "lock.lock",
+          "maxlength": "31"
+        }
+      },
+      {
+        "type": "input",
+        "messageKey": "ENTITY_BOTTOM_5",
+        "label": "Bottom Target Entity",
+        "description": "Leave empty for actions that need no target, such as a script without arguments.",
+        "attributes": {
+          "placeholder": "lock.front_door",
+          "maxlength": "47"
+        }
+      },
+      {
+        "type": "toggle",
+        "messageKey": "CONFIRM_BOTTOM_5",
+        "label": "Bottom Confirmation Prompt",
+        "description": "Shows a countdown ring before the action runs. Cards with a prompt are marked with a dot.",
+        "defaultValue": false
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "items": [
+      {
+        "type": "heading",
+        "defaultValue": "Appearance"
+      },
+      {
+        "type": "select",
+        "messageKey": "THEME",
+        "label": "Color Scheme",
+        "defaultValue": "DARK",
+        "description": "Dark uses a white button rail on black, Light a black rail on white.",
+        "options": [
+          {
+            "label": "Dark",
+            "value": "DARK"
+          },
+          {
+            "label": "Light",
+            "value": "LIGHT"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "submit",
+    "defaultValue": "Save"
+  }
+]

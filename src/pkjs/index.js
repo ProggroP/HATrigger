@@ -308,7 +308,8 @@ function runAction(index, screen) {
 var SCREEN_FIELDS = [
   'STATUS_ENTITY',
   'LABEL_TOP', 'SERVICE_TOP', 'ENTITY_TOP', 'CONFIRM_TOP',
-  'LABEL_BOTTOM', 'SERVICE_BOTTOM', 'ENTITY_BOTTOM', 'CONFIRM_BOTTOM'
+  'LABEL_BOTTOM', 'SERVICE_BOTTOM', 'ENTITY_BOTTOM', 'CONFIRM_BOTTOM',
+  'COLOR'   // Index der Kartenfarbe, kommt von der Uhr als Zahl
 ];
 
 var CONFIG_KEYS = ['HA_URL', 'HA_TOKEN', 'THEME'];

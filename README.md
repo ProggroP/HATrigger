@@ -2,9 +2,9 @@
 
 *Up to ten Home Assistant actions on five screens, one button each.*
 
-<img src="cloudpebble/screenshots/emery-1-dark.png" alt="emery-1-dark.png"> <img src="cloudpebble/screenshots/emery-2-garage.png" alt="emery-2-garage.png"> <img src="cloudpebble/screenshots/emery-3-confirm.png" alt="emery-3-confirm.png"> <img src="cloudpebble/screenshots/gabbro-1-dark.png" alt="gabbro-1-dark.png"> <img src="cloudpebble/screenshots/gabbro-2-garage.png" alt="gabbro-2-garage.png"> <img src="cloudpebble/screenshots/gabbro-3-confirm.png" alt="gabbro-3-confirm.png">
+<img src="cloudpebble/screenshots/emery-1-door.png" alt="emery-1-door.png"> <img src="cloudpebble/screenshots/emery-2-garage.png" alt="emery-2-garage.png"> <img src="cloudpebble/screenshots/emery-3-coffee.png" alt="emery-3-coffee.png"> <img src="cloudpebble/screenshots/gabbro-1-door.png" alt="gabbro-1-door.png"> <img src="cloudpebble/screenshots/gabbro-2-garage.png" alt="gabbro-2-garage.png"> <img src="cloudpebble/screenshots/gabbro-3-coffee.png" alt="gabbro-3-coffee.png">
 
-A Pebble watchapp (v1.2.0).
+A Pebble watchapp (v1.3.0).
 
 HA Trigger puts Home Assistant actions on your wrist and keeps the answer
 in front of you.
@@ -20,6 +20,12 @@ Set up as many as five screens — front door, garage, lights — and flip
 through them with the middle button. Only screens with at least one action
 are shown, and dots on the button rail tell you where you are. The app
 reopens on the screen you left it on.
+
+Give every screen its own colour. Blue for the front door, red for the
+attic, green for the coffee machine: the action cards take on the colour
+you pick, so you know which screen you are on before you have read a word.
+Seven colours are available, each dark enough to keep the white card text
+easy to read.
 
 Each action can ask before it fires. Turn the prompt on for anything you do
 not want to trigger from a pocket, and the watch shows a countdown ring:
@@ -49,8 +55,10 @@ inside the circle on the round one.
   `http://`.
 - **Long-Lived Token** — from Profile > Security in Home Assistant. Best
   created under a dedicated, non-administrative user.
-- **Screens 1 to 5** — each with its own status entity and a top and bottom
-  action. Leave both actions of a screen empty to hide it.
+- **Screens 1 to 5** — each with its own card colour, status entity and a
+  top and bottom action. Leave both actions of a screen empty to hide it.
+- **Card Color** — blue, red, green, orange, purple, teal or gray. Screens
+  start out in blue, red, green, orange and purple.
 - **Status Entity** — shown in the centre of the screen. Leave empty to use
   the top action's entity, or the bottom one's if the top is empty. A
   template sensor works well here.
@@ -79,6 +87,12 @@ pebble install --emulator emery
 The repository can also be imported into CloudPebble as is.
 
 ## Release notes
+
+### 1.3.0
+
+- Each screen has its own card colour, chosen from seven, so you can tell the
+  screens apart at a glance. Screens 2 to 5 start out in red, green, orange
+  and purple; screen 1 keeps its blue.
 
 ### 1.2.0
 

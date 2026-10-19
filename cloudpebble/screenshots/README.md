@@ -4,9 +4,12 @@ Sechs Aufnahmen, je Plattform derselbe Satz:
 
 | Datei | Inhalt |
 |---|---|
-| `*-1-dark.png` | Bildschirm 1 (Haustür), Status „Locked", fünf Seitenpunkte |
-| `*-2-garage.png` | Bildschirm 2 (Garage), Status „Closed", fünf Seitenpunkte |
-| `*-3-confirm.png` | Sicherheitsabfrage mit ablaufendem Countdown-Ring |
+| `*-1-door.png` | Bildschirm 1 (Haustür), Dark, Karten blau, Status „Locked" |
+| `*-2-garage.png` | Bildschirm 2 (Garage), Light, Karten lila, Status „Closed" |
+| `*-3-coffee.png` | Bildschirm 3 (Kaffeemaschine), Dark, Karten grün, Status „Off" |
+
+`144.png` und `80.png` sind die Store-Grafiken, verkleinert aus
+`gabbro-1-door.png`.
 
 Emery 200 × 228, Gabbro 260 × 260, jeweils native Auflösung ohne Rahmen.
 
@@ -28,7 +31,9 @@ festen Zustand meldet (Schloss verriegelt, Garage zu, Kaffeemaschine aus,
 Licht an, Tor offen) und jede Anfrage protokolliert — der Emulator läuft in
 WSL und erreicht ihn direkt. `seed.py` belegt alle fünf Bildschirme, damit
 die Rail den vollen Satz Seitenpunkte zeigt; auf Bildschirm 4 ist nur die
-obere Aktion belegt, und zwar ohne Label:
+obere Aktion belegt, und zwar ohne Label. Jeder Bildschirm bekommt eine
+eigene Kartenfarbe, Bildschirm 2 absichtlich nicht die Vorgabe — so zeigt
+sich, ob die Farbe wirklich von der Telefonseite ankommt:
 
 ```bash
 (setsid python3 fake_ha.py > /tmp/fake_ha.log 2>&1 &)
@@ -48,7 +53,10 @@ Für einen Theme-Wechsel muss der Emulator nicht neu booten: nur
 `pkill -f pypkjs`, neu seeden, nochmal installieren — das spart auf Gabbro
 die knappe Minute Bootzeit. Achtung: `pkill -f pypkjs` trennt *beide*
 laufenden Emulatoren vom Telefon, danach die jeweils andere Plattform
-ebenfalls neu installieren.
+ebenfalls neu installieren. Und das folgende `install` findet den alten
+Emulator oft nicht mehr und startet einen weiteren QEMU (am 19.10.2026 waren
+es danach vier). Zum Schluss deshalb mit `pgrep -fc '[q]emu-pebble'` zählen
+und Waisen per `pkill -TERM -f '[q]emu-pebble'` beenden, dann `pb.ps1 reset`.
 
 Die App startet auf dem zuletzt gezeigten Bildschirm. Vor einer Aufnahme
 also per `pebble emu-button click select` auf den gewünschten blättern.

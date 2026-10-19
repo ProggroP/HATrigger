@@ -74,6 +74,9 @@
 #define PK_LEGACY_BASE        3
 #define PK_THEME_DARK        12
 #define PK_CURRENT_SCREEN    13
+// Kartenfarbe je Bildschirm, 14..18. Liegt ausserhalb der Feldbloecke,
+// weil Bildschirm 1 dort keinen freien Schluessel mehr hat (12 = Theme).
+#define PK_COLOR_BASE        14
 #define PK_SCREEN_BASE      100
 #define PK_SCREEN_STRIDE     10
 
@@ -164,8 +167,9 @@ typedef enum {
 //  Gabbro stellt die Palette entsaettigt dar, deshalb durchweg
 //  kraeftige Grundfarben statt zarter Zwischentoene.
 // ------------------------------------------------------------
-//  Die Karten sind in beiden Themes dasselbe Dunkelblau mit weissem
-//  Text. Nur Hintergrund und Rail wechseln. Eine helle Karte mit weisser
+//  Die Karten haben in beiden Themes dieselbe dunkle Flaeche mit weissem
+//  Text, deren Farbton je Bildschirm waehlbar ist (CARD_PALETTE). Nur
+//  Hintergrund und Rail wechseln mit dem Theme. Eine helle Karte mit weisser
 //  Schrift kam im Light Theme auf 2,6:1 und war kaum lesbar, dunkel auf
 //  hell gestellt sind es 13:1.
 //
@@ -180,8 +184,6 @@ typedef enum {
 //  Auf hellem Grund braucht es deshalb die dunklen Varianten. Kein Paar
 //  liegt jetzt unter 5:1.
 #define COL_DARK_BG          GColorBlack
-#define COL_DARK_CARD        GColorDukeBlue
-#define COL_DARK_STRIPE      GColorElectricBlue
 #define COL_DARK_TEXT        GColorWhite
 #define COL_DARK_DIM         GColorLightGray
 #define COL_DARK_RAIL        GColorWhite
@@ -191,8 +193,6 @@ typedef enum {
 #define COL_DARK_BUSY        GColorYellow
 
 #define COL_LIGHT_BG         GColorWhite
-#define COL_LIGHT_CARD       GColorDukeBlue
-#define COL_LIGHT_STRIPE     GColorVividCerulean
 #define COL_LIGHT_TEXT       GColorBlack
 #define COL_LIGHT_DIM        GColorDarkGray
 #define COL_LIGHT_RAIL       GColorBlack
@@ -206,6 +206,32 @@ typedef enum {
 // Der Punkt der Sicherheitsabfrage sitzt ebenfalls auf der Karte und
 // bleibt deshalb in beiden Themes hell
 #define COL_CARD_DOT         GColorChromeYellow
+
+// Kartenfarben zur Wahl, Index = Wert aus der Clay-Auswahl. Die Flaeche
+// ist immer dunkel genug fuer weissen Text (kein Eintrag unter 5:1),
+// Rahmen und Streifen kommen je Theme in einem hellen Ton, damit die
+// Karte auch auf Schwarz sichtbar bleibt. Reihenfolge nicht aendern,
+// sonst wechseln gespeicherte Bildschirme ihre Farbe.
+typedef struct {
+  GColor8 card;
+  GColor8 edge_dark;
+  GColor8 edge_light;
+} CardPalette;
+
+#define PAL(c, d, l) { {.argb = GColor##c##ARGB8}, {.argb = GColor##d##ARGB8}, \
+                       {.argb = GColor##l##ARGB8} }
+
+static const CardPalette CARD_PALETTE[] = {
+  PAL(DukeBlue,          ElectricBlue, VividCerulean),   // 0 Blau
+  PAL(DarkCandyAppleRed, SunsetOrange, Red),             // 1 Rot
+  PAL(DarkGreen,         Malachite,    IslamicGreen),    // 2 Gruen
+  PAL(WindsorTan,        ChromeYellow, Orange),          // 3 Orange
+  PAL(Purple,            ShockingPink, Magenta),         // 4 Lila
+  PAL(MidnightGreen,     TiffanyBlue,  TiffanyBlue),     // 5 Petrol
+  PAL(DarkGray,          LightGray,    LightGray)        // 6 Grau
+};
+
+#define COLOR_COUNT  ((uint8_t)ARRAY_LENGTH(CARD_PALETTE))
 
 // ------------------------------------------------------------
 //  ZUSTANDSART DES STATUSTEXTES
@@ -258,8 +284,9 @@ typedef struct {
 } Action;
 
 typedef struct {
-  char   status_entity[ENTITY_LEN];
-  Action act[SLOT_COUNT];
+  char    status_entity[ENTITY_LEN];
+  Action  act[SLOT_COUNT];
+  uint8_t color;   // Index in CARD_PALETTE
 } Screen;
 
 // Message Keys je Bildschirm. MESSAGE_KEY_* sind Variablen, keine
@@ -270,6 +297,7 @@ typedef struct {
   uint32_t service[SLOT_COUNT];
   uint32_t entity[SLOT_COUNT];
   uint32_t confirm[SLOT_COUNT];
+  uint32_t color;
 } ScreenKeys;
 
 static char   s_ha_url[URL_LEN]     = "";
@@ -320,14 +348,23 @@ static const GPathInfo TRI_DOWN_INFO = {
 //  FARBWAHL
 // ------------------------------------------------------------
 static GColor color_bg(void)     { return s_dark ? COL_DARK_BG     : COL_LIGHT_BG;     }
-static GColor color_card(void)   { return s_dark ? COL_DARK_CARD   : COL_LIGHT_CARD;   }
-static GColor color_stripe(void) { return s_dark ? COL_DARK_STRIPE : COL_LIGHT_STRIPE; }
 static GColor color_text(void)   { return s_dark ? COL_DARK_TEXT   : COL_LIGHT_TEXT;   }
 static GColor color_dim(void)    { return s_dark ? COL_DARK_DIM    : COL_LIGHT_DIM;    }
 static GColor color_rail(void)   { return s_dark ? COL_DARK_RAIL   : COL_LIGHT_RAIL;   }
 static GColor color_glyph(void)  { return s_dark ? COL_DARK_GLYPH  : COL_LIGHT_GLYPH;  }
 
 static GColor color_busy(void)   { return s_dark ? COL_DARK_BUSY   : COL_LIGHT_BUSY;   }
+
+// Kartenfarben des gerade gezeigten Bildschirms
+static const CardPalette *card_palette(void) {
+  uint8_t c = s_screens[s_screen].color;
+  return &CARD_PALETTE[c < COLOR_COUNT ? c : 0];
+}
+
+static GColor color_card(void)   { return card_palette()->card; }
+static GColor color_stripe(void) {
+  return s_dark ? card_palette()->edge_dark : card_palette()->edge_light;
+}
 
 static GColor color_state(void) {
   switch (s_status_kind) {
@@ -683,6 +720,7 @@ static bool build_message(DictionaryIterator *iter, const OutItem *item) {
         if (r == DICT_OK) r = dict_write_cstring(iter, k->entity[s],  a->entity);
         if (r == DICT_OK) r = dict_write_uint8(iter,   k->confirm[s], a->confirm ? 1 : 0);
       }
+      if (r == DICT_OK) r = dict_write_uint8(iter, k->color, sc->color);
       if (r == DICT_OK) r = dict_write_uint8(iter, MESSAGE_KEY_CONFIG_PUSH, last ? 2 : 1);
       if (last && r == DICT_OK) r = dict_write_uint8(iter, MESSAGE_KEY_SCREEN, s_screen);
       break;
@@ -766,12 +804,19 @@ static void read_str(uint32_t key, char *dst, size_t len) {
   if (persist_exists(key)) persist_read_string(key, dst, len);
 }
 
-// Standard wie in der Zwei-Aktionen-Fassung: oben mit Abfrage, unten ohne
+// Standard wie in der Zwei-Aktionen-Fassung: oben mit Abfrage, unten ohne.
+// Jeder Bildschirm startet in einer eigenen Farbe, Bildschirm 1 im
+// bisherigen Blau. Die Clay-Seite hat dieselben Vorgaben.
 static void default_config(void) {
   memset(s_screens, 0, sizeof(s_screens));
   for (uint8_t i = 0; i < SCREEN_COUNT; i++) {
     s_screens[i].act[SLOT_TOP].confirm = true;
+    s_screens[i].color = i % COLOR_COUNT;
   }
+}
+
+static uint8_t clamp_color(int32_t v) {
+  return (v >= 0 && v < COLOR_COUNT) ? (uint8_t)v : 0;
 }
 
 static void load_config(void) {
@@ -791,6 +836,9 @@ static void load_config(void) {
       uint32_t kc = pk(i, FIELD(F_CONFIRM, s));
       if (persist_exists(kc)) a->confirm = persist_read_bool(kc);
     }
+    if (persist_exists(PK_COLOR_BASE + i)) {
+      sc->color = clamp_color(persist_read_int(PK_COLOR_BASE + i));
+    }
   }
 
   if (persist_exists(PK_THEME_DARK))     s_dark   = persist_read_bool(PK_THEME_DARK);
@@ -803,7 +851,7 @@ static void load_config(void) {
 // ins Leere, funktioniert nach einem Neustart gar nichts mehr.
 //
 // Budget: persist fasst 4 KB je App. Voll ausgeschoepft brauchen URL,
-// Token und fuenf Bildschirme rund 1,7 KB Nutzdaten.
+// Token und fuenf Bildschirme samt Farbe rund 1,7 KB Nutzdaten.
 static bool save_config(void) {
   bool ok = true;
 
@@ -820,6 +868,7 @@ static bool save_config(void) {
       persist_write_string(pk(i, FIELD(F_ENTITY, s)),  a->entity);
       persist_write_bool(pk(i, FIELD(F_CONFIRM, s)),   a->confirm);
     }
+    persist_write_int(PK_COLOR_BASE + i, sc->color);
   }
 
   persist_write_bool(PK_THEME_DARK, s_dark);
@@ -1111,6 +1160,13 @@ static void inbox_received(DictionaryIterator *iter, void *context) {
       if (copy_tuple(iter, k->entity[s],  a->entity,  ENTITY_LEN,  NULL)) changed = true;
       if (copy_bool(iter,  k->confirm[s], &a->confirm))                   changed = true;
     }
+    // Clay schickt den Wert der Auswahl als String ("3"), die Uhr selbst
+    // und die JS-Rueckgabe als Zahl - tuple_int liest beides
+    Tuple *ct = dict_find(iter, k->color);
+    if (ct) {
+      sc->color = clamp_color(tuple_int(ct));
+      changed = true;
+    }
   }
 
   char theme[THEME_LEN] = "";
@@ -1180,7 +1236,8 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
   .label   = { MESSAGE_KEY_LABEL_TOP##SFX,   MESSAGE_KEY_LABEL_BOTTOM##SFX },   \
   .service = { MESSAGE_KEY_SERVICE_TOP##SFX, MESSAGE_KEY_SERVICE_BOTTOM##SFX }, \
   .entity  = { MESSAGE_KEY_ENTITY_TOP##SFX,  MESSAGE_KEY_ENTITY_BOTTOM##SFX },  \
-  .confirm = { MESSAGE_KEY_CONFIRM_TOP##SFX, MESSAGE_KEY_CONFIRM_BOTTOM##SFX }  \
+  .confirm = { MESSAGE_KEY_CONFIRM_TOP##SFX, MESSAGE_KEY_CONFIRM_BOTTOM##SFX }, \
+  .color   = MESSAGE_KEY_COLOR##SFX                                       \
 }
 
 static void init_keys(void) {

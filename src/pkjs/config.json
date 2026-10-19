@@ -5,7 +5,7 @@
   },
   {
     "type": "text",
-    "defaultValue": "Up to five screens, each with two Home Assistant actions on the top and bottom buttons and its own status line. The middle button flips to the next screen; only screens with at least one action are shown. The status refreshes by itself every 15 seconds while the app is open. Fill in your own URL, token and entities below."
+    "defaultValue": "Up to five screens, each with two Home Assistant actions on the top and bottom buttons and its own status line. The middle button flips to the next screen; only screens with at least one action are shown. Give each screen its own card colour to tell them apart. The status refreshes by itself every 15 seconds while the app is open. Fill in your own URL, token and entities below."
   },
   {
     "type": "section",
@@ -48,6 +48,43 @@
       {
         "type": "text",
         "defaultValue": "Screens 2 to 5 below work the same way. Leave both actions of a screen empty to hide it."
+      },
+      {
+        "type": "select",
+        "messageKey": "COLOR",
+        "label": "Card Color",
+        "defaultValue": "0",
+        "description": "Colour of the two action cards, so you can tell the screens apart at a glance.",
+        "options": [
+          {
+            "label": "Blue",
+            "value": "0"
+          },
+          {
+            "label": "Red",
+            "value": "1"
+          },
+          {
+            "label": "Green",
+            "value": "2"
+          },
+          {
+            "label": "Orange",
+            "value": "3"
+          },
+          {
+            "label": "Purple",
+            "value": "4"
+          },
+          {
+            "label": "Teal",
+            "value": "5"
+          },
+          {
+            "label": "Gray",
+            "value": "6"
+          }
+        ]
       },
       {
         "type": "input",
@@ -143,6 +180,43 @@
         "defaultValue": "Screen 2"
       },
       {
+        "type": "select",
+        "messageKey": "COLOR_2",
+        "label": "Card Color",
+        "defaultValue": "1",
+        "description": "Colour of the two action cards, so you can tell the screens apart at a glance.",
+        "options": [
+          {
+            "label": "Blue",
+            "value": "0"
+          },
+          {
+            "label": "Red",
+            "value": "1"
+          },
+          {
+            "label": "Green",
+            "value": "2"
+          },
+          {
+            "label": "Orange",
+            "value": "3"
+          },
+          {
+            "label": "Purple",
+            "value": "4"
+          },
+          {
+            "label": "Teal",
+            "value": "5"
+          },
+          {
+            "label": "Gray",
+            "value": "6"
+          }
+        ]
+      },
+      {
         "type": "input",
         "messageKey": "STATUS_ENTITY_2",
         "label": "Status Entity",
@@ -232,6 +306,43 @@
       {
         "type": "heading",
         "defaultValue": "Screen 3"
+      },
+      {
+        "type": "select",
+        "messageKey": "COLOR_3",
+        "label": "Card Color",
+        "defaultValue": "2",
+        "description": "Colour of the two action cards, so you can tell the screens apart at a glance.",
+        "options": [
+          {
+            "label": "Blue",
+            "value": "0"
+          },
+          {
+            "label": "Red",
+            "value": "1"
+          },
+          {
+            "label": "Green",
+            "value": "2"
+          },
+          {
+            "label": "Orange",
+            "value": "3"
+          },
+          {
+            "label": "Purple",
+            "value": "4"
+          },
+          {
+            "label": "Teal",
+            "value": "5"
+          },
+          {
+            "label": "Gray",
+            "value": "6"
+          }
+        ]
       },
       {
         "type": "input",
@@ -325,6 +436,43 @@
         "defaultValue": "Screen 4"
       },
       {
+        "type": "select",
+        "messageKey": "COLOR_4",
+        "label": "Card Color",
+        "defaultValue": "3",
+        "description": "Colour of the two action cards, so you can tell the screens apart at a glance.",
+        "options": [
+          {
+            "label": "Blue",
+            "value": "0"
+          },
+          {
+            "label": "Red",
+            "value": "1"
+          },
+          {
+            "label": "Green",
+            "value": "2"
+          },
+          {
+            "label": "Orange",
+            "value": "3"
+          },
+          {
+            "label": "Purple",
+            "value": "4"
+          },
+          {
+            "label": "Teal",
+            "value": "5"
+          },
+          {
+            "label": "Gray",
+            "value": "6"
+          }
+        ]
+      },
+      {
         "type": "input",
         "messageKey": "STATUS_ENTITY_4",
         "label": "Status Entity",
@@ -414,6 +562,43 @@
       {
         "type": "heading",
         "defaultValue": "Screen 5"
+      },
+      {
+        "type": "select",
+        "messageKey": "COLOR_5",
+        "label": "Card Color",
+        "defaultValue": "4",
+        "description": "Colour of the two action cards, so you can tell the screens apart at a glance.",
+        "options": [
+          {
+            "label": "Blue",
+            "value": "0"
+          },
+          {
+            "label": "Red",
+            "value": "1"
+          },
+          {
+            "label": "Green",
+            "value": "2"
+          },
+          {
+            "label": "Orange",
+            "value": "3"
+          },
+          {
+            "label": "Purple",
+            "value": "4"
+          },
+          {
+            "label": "Teal",
+            "value": "5"
+          },
+          {
+            "label": "Gray",
+            "value": "6"
+          }
+        ]
       },
       {
         "type": "input",
